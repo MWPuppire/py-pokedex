@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+import sys, pypokedex
+
+if '-help' in sys.argv:
+    sys.argv = sys.argv.remove('-help')
+    print(pypokedex.help())
+    exit()
+elif '-list' in sys.argv:
+    sys.argv = sys.argv.remove('-list')
+    print("\n".join(pypokedex.list()))
+    exit()
+opts = {}
+while sys.argv:
+    if sys.argv[0][0] == '-':
+        try:
+            opts[sys.argv[0]] = sys.argv[1]
+        except Exception:
+            print("\nError: Missing arguments")
+            print(pypokedex.help())
+            exit()
+    sys.argv = sys.argv[1:]
+if opts == {}:
+    print(pypokedex.help())
+    exit()
+if '-lookup' in opts:
+    print(pypokedex.lookup(opts['-lookup']))
+elif '-gen' in opts:
+    print("\n".join(pypokedex.listgen(opts['-gen'])))
